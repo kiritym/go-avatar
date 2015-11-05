@@ -13,9 +13,9 @@ import (
 	"html/template"
 )
 
-const (
-	AvatarSize = 240
-	PixelSize = AvatarSize/12
+var (
+	AvatarSize int
+	PixelSize int
 )
 
 
@@ -34,18 +34,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
   nameBytes := []byte(r.URL.Path[1:])
   //fmt.Println(r.URL.Path[1:])
-	//token := r.URL.Query().Get("type")
-	//fmt.Println(token)
+
   //fmt.Println(nameBytes)
-	if(len(nameBytes) < 3){
-		fmt.Fprintf(w, "Please provide a valid username(atleast 3 characters)")
+	if (len(nameBytes) < 3){
+		fmt.Fprintf(w, "Please provide a valid username(atleast 3 characters).")
 	}else{
+		setSize(w, r)
 		avatar := image.NewRGBA(image.Rect(0, 0, AvatarSize, AvatarSize))
 		PaintBackGround(avatar, CalculateBGColor(nameBytes))
 		DrawPattern(avatar, nameBytes, CalculatePixelColor(nameBytes))
 		//SavePNG(avatar, r.URL.Path[1:])
 		var img image.Image = avatar
 		writeImageWithTemplate(w, &img)
+
 	}
 
 }
@@ -85,5 +86,29 @@ func writeImage(w http.ResponseWriter, img *image.Image) {
 	w.Header().Set("Content-Length", strconv.Itoa(len(buffer.Bytes())))
 	if _, err := w.Write(buffer.Bytes()); err != nil {
 		log.Println("unable to write image.")
+	}
+}
+
+//set avatar size
+func setAvatarSize(pixelSize int) {
+	AvatarSize = pixelSize*10
+	PixelSize = AvatarSize/10
+}
+
+//read size parameter
+func setSize(w http.ResponseWriter, r *http.Request) {
+	size := r.URL.Query().Get("size")
+	fmt.Println(size)
+	if (len(size) > 0){
+		i, err := strconv.Atoi(size)
+		fmt.Println(i)
+		if (err != nil)  {
+				// handle error
+				fmt.Println(err)
+				fmt.Fprintf(w, "Size should be integer.")
+		}
+		setAvatarSize(i)
+	}else{
+		setAvatarSize(20)
 	}
 }

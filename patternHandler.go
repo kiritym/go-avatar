@@ -78,13 +78,11 @@ func DrawTopPattern(avatar *image.RGBA, pixelColor color.RGBA) {
 	// Make the top left quadrant pattern
 	for y := PixelSize; y < AvatarSize/2 - PixelSize; y=y+PixelSize {
 		for x := PixelSize; x < AvatarSize/2 - PixelSize; x=x+PixelSize {
-			if ((x + y) % 2) == 0 {
 				randNumber := rand.Intn(3)
 				if (randNumber == 1) || (randNumber == 2){
 					//fmt.Printf("x= %d, y= %d\n", x,y)
 					fillPixels(avatar, x, y, pixelColor)
 				}
-			}
 		}
 	}
 	DrawTopRightPattern(avatar)
@@ -105,14 +103,12 @@ func DrawBottomPattern(avatar *image.RGBA, pixelColor color.RGBA) {
 	// Make the bottom left pattern
 	for y := AvatarSize/2 + PixelSize; y < AvatarSize - PixelSize; y=y+PixelSize {
 		for x := PixelSize; x < AvatarSize/2 - PixelSize; x=x+PixelSize {
-			if ((x + y) % 2) == 0 {
 				randNumber := rand.Intn(3)
 				//fmt.Println(randNumber)
-				if ((randNumber == 0) || (randNumber == 1)){
+				if ((randNumber == 1) || (randNumber == 2)){
 					//fmt.Printf("x= %d, y= %d\n", x,y)
 					fillPixels(avatar, x, y, pixelColor)
 				}
-			}
 		}
 	}
 	DrawBottomRightPattern(avatar)
