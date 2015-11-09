@@ -5,10 +5,8 @@ This will create a default and unique avatar based on the user name. You can spe
 - ```cd go-avatar```
 - ```go build```
 - ```./go-avatar```
-- Now you can hit the below URL with your user-name to get your avatar:
-```http://localhost:8080/user-name```
-- For various size, you can pass a size parameter as:
-```http://localhost:8080/user-name?size=15```
+- Now you can hit the below URL with your user-name to get your avatar: ```http://localhost:8080/user-name```
+- For various size, you can pass a size parameter as: ```http://localhost:8080/user-name?size=15```
 - Below are few examples
 
 ```size = 10 ```
