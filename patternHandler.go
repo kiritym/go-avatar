@@ -9,8 +9,14 @@ import (
 	"os"
 )
 
-func SavePNG(avatar image.Image, name string) {
-	file, err := os.Create(name + ".png")
+func SavePNG(avatar image.Image, name string, size string) {
+	var imagename string
+	if(len(size)>0){
+		imagename = name + "-" + size +".png"
+	}else{
+		imagename = name +".png"
+	}
+	file, err := os.Create(imagename)
 	err = png.Encode(file, avatar)
 
 	if err != nil {
@@ -76,8 +82,8 @@ func CalculateBGColor(nameBytes []byte) (bgColor color.RGBA) {
 
 func DrawTopPattern(avatar *image.RGBA, pixelColor color.RGBA) {
 	// Make the top left quadrant pattern
-	for y := PixelSize; y < AvatarSize/2 - PixelSize; y=y+PixelSize {
-		for x := PixelSize; x < AvatarSize/2 - PixelSize; x=x+PixelSize {
+	for y := PixelSize; y < AvatarSize/2; y=y+PixelSize {
+		for x := PixelSize; x < AvatarSize/2; x=x+PixelSize {
 				randNumber := rand.Intn(3)
 				if (randNumber == 1) || (randNumber == 2){
 					//fmt.Printf("x= %d, y= %d\n", x,y)
@@ -102,7 +108,7 @@ func DrawTopRightPattern(avatar *image.RGBA) {
 func DrawBottomPattern(avatar *image.RGBA, pixelColor color.RGBA) {
 	// Make the bottom left pattern
 	for y := AvatarSize/2 + PixelSize; y < AvatarSize - PixelSize; y=y+PixelSize {
-		for x := PixelSize; x < AvatarSize/2 - PixelSize; x=x+PixelSize {
+		for x := PixelSize; x < AvatarSize/2; x=x+PixelSize {
 				randNumber := rand.Intn(3)
 				//fmt.Println(randNumber)
 				if ((randNumber == 1) || (randNumber == 2)){

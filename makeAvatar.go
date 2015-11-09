@@ -43,7 +43,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		avatar := image.NewRGBA(image.Rect(0, 0, AvatarSize, AvatarSize))
 		PaintBackGround(avatar, CalculateBGColor(nameBytes))
 		DrawPattern(avatar, nameBytes, CalculatePixelColor(nameBytes))
-		//SavePNG(avatar, r.URL.Path[1:])
+		SavePNG(avatar, r.URL.Path[1:], r.URL.Query().Get("size"))
 		var img image.Image = avatar
 		writeImageWithTemplate(w, &img)
 
